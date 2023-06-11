@@ -1,8 +1,7 @@
 { djgpp_i686, fetchFromGitHub, gendef, git, lib, open-watcom-bin, perl
 , pkgsCross, stdenv, unixtools, which }:
 let
-  nixpkgs = import <nixpkgs> { };
-  mingw32 = nixpkgs.pkgsCross.mingw32;
+  mingw32 = (import <nixpkgs> { }).pkgsCross.mingw32;
 in stdenv.mkDerivation rec {
   pname = "qemu-3dfx-wrappers";
   version = "unstable_2023-05-29";
