@@ -10942,6 +10942,8 @@ with pkgs;
 
   openjade = callPackage ../tools/text/sgml/openjade { };
 
+  openglidekjl = callPackage ../development/libraries/openglidekjl { };
+
   openhantek6022 = libsForQt5.callPackage ../applications/science/electronics/openhantek6022 { };
 
   openimagedenoise = callPackage ../development/libraries/openimagedenoise { };
@@ -27796,6 +27798,9 @@ with pkgs;
   qemu_xen_4_15-light = lowPrio (qemu.override { hostCpuOnly = true; xenSupport = true; xen = xen_4_15-light; });
 
   qemu_test = lowPrio (qemu.override { hostCpuOnly = true; nixosTestRunner = true; });
+
+  qemu_3dfx = lowPrio (qemu.override { kjl3dfxSupport = true; });
+  qemu_3dfx_wrappers = callPackage ../applications/virtualization/qemu-3dfx-wrappers { };
 
   quick-lint-js = callPackage ../development/tools/quick-lint-js { };
 

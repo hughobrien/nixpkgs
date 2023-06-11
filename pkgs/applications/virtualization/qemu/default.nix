@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, fetchpatch, python3Packages, zlib, pkg-config, glib, buildPackages
+{ lib, stdenv, fetchurl, fetchpatch, fetchFromGitHub, python3Packages, zlib, pkg-config, glib, buildPackages
 , pixman, vde2, alsa-lib, texinfo, flex
 , bison, lzo, snappy, libaio, libtasn1, gnutls, nettle, curl, ninja, meson, sigtool
 , makeWrapper, runtimeShell, removeReferencesTo
@@ -35,6 +35,7 @@
                           ++ ["${stdenv.hostPlatform.qemuArch}-softmmu"])
                     else null)
 , nixosTestRunner ? false
+, kjl3dfxSupport ? false, openglidekjl
 , doCheck ? false
 , qemu  # for passthru.tests
 }:
@@ -53,6 +54,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.qemu.org/qemu-${version}.tar.xz";
     sha256 = "8GCr1DX75nlBJeLDmFaP/Dz6VABCWWkHqLGO3KNM9qU=";
+  };
+
+  kjl3dfx = fetchFromGitHub {
+    owner = "kjliew";
+    repo = "qemu-3dfx";
+    rev = "0f2faac7ade56c666fd8ee0cf2c5dafec60631ec";
+    hash = "sha256-zNJAf13VuSzzdq4uUrJ63Kl38yrIzN+plFqPy4fBLXo=";
+    name = "3dfx";
   };
 
   depsBuildBuild = [ buildPackages.stdenv.cc ]
@@ -96,7 +105,8 @@ stdenv.mkDerivation rec {
     ++ lib.optionals smbdSupport [ samba ]
     ++ lib.optionals uringSupport [ liburing ]
     ++ lib.optionals canokeySupport [ canokey-qemu ]
-    ++ lib.optionals capstoneSupport [ capstone ];
+    ++ lib.optionals capstoneSupport [ capstone ]
+    ++ lib.optionals kjl3dfxSupport [ openglidekjl ];
 
   dontUseMesonConfigure = true; # meson's configurePhase isn't compatible with qemu build
 
@@ -133,6 +143,19 @@ stdenv.mkDerivation rec {
     # Otherwise tries to ensure /var/run exists.
     sed -i "/install_emptydir(get_option('localstatedir') \/ 'run')/d" \
         qga/meson.build
+  ''
+  + lib.optionalString kjl3dfxSupport ''
+    patchfile="qemu800-mesa-glide.patch"
+    sed 's|cursor_put(|cursor_unref(|g' "${kjl3dfx}/00-qemu720-mesa-glide.patch" > "$patchfile"
+    patch -p0 -i "$patchfile"
+
+    cp -r "${kjl3dfx}/qemu-0/hw/3dfx" ./hw/
+    cp -r "${kjl3dfx}/qemu-1/hw/mesa" ./hw/
+    chmod +w ./hw/3dfx ./hw/mesa
+
+    scriptfile="kjl_sign_commit.sh"
+    sed 's|cd $GIT; git rev-parse $ARG|echo ${kjl3dfx.rev}|' "${kjl3dfx}/scripts/sign_commit" > "$scriptfile"
+    bash "$scriptfile"
   '';
 
   preConfigure = ''
