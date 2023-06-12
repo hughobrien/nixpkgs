@@ -17,7 +17,6 @@ in stdenv.mkDerivation rec {
     for f in wrappers/*/*/Makefile*; do
         substituteInPlace "$f" --replace 'git rev-parse HEAD' 'echo ${src.rev}'
     done
-    substituteInPlace wrappers/{3dfx,mesa}/src/Makefile.in --replace '-march=x86-64-v2' '-march=i686'
     substituteInPlace wrappers/3dfx/ovl/Makefile --replace '/opt/watcom11/bin' "$(dirname $(which wcc386))"
     substituteInPlace wrappers/3dfx/ovl/{Makefile,glideovl.lnk} --replace 'obj' 'o'
     substituteInPlace wrappers/3dfx/dxe/glidedxe.c --replace 'uint8_t pad[ALIGNED(1)];' 'uint8_t pad[ALIGNED(1)] = {0};'
