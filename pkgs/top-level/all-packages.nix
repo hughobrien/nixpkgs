@@ -27799,7 +27799,7 @@ with pkgs;
 
   qemu_test = lowPrio (qemu.override { hostCpuOnly = true; nixosTestRunner = true; });
 
-  qemu_3dfx = lowPrio (qemu.override { kjl3dfxSupport = true; });
+  qemu_3dfx = lowPrio (qemu.override { kjl3dfxSupport = true; hostCpuOnly = true; });
   qemu_3dfx_wrappers = callPackage ../applications/virtualization/qemu-3dfx-wrappers { };
 
   quick-lint-js = callPackage ../development/tools/quick-lint-js { };
