@@ -36,12 +36,11 @@ in stdenv.mkDerivation rec {
 
   buildPhase = ''
     for d in 3dfx mesa; do
-      mkdir wrappers/$d/build
-      (cd wrappers/$d/build
-        bash ../../../scripts/conf_wrapper
-        make
-        make clean
-      )
+      mkdir wrappers/$d/build; pushd wrappers/$d/build
+      bash ../../../scripts/conf_wrapper
+      make
+      make clean
+      popd
     done
   '';
 
