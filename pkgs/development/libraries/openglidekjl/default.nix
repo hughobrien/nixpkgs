@@ -1,6 +1,6 @@
 { autoconf, automake, fetchFromGitHub, lib, libGL, libGLU, libtool, libX11, mesa , stdenv }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "openglidekjl";
   version = "20230610-unstable";
 
@@ -25,4 +25,4 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ hughobrien ];
     platforms = platforms.linux;
   };
-}
+})

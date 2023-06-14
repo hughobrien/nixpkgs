@@ -2,7 +2,7 @@
 , pkgsCross, stdenv, unixtools, which }:
 let
   mingw32 = (import <nixpkgs> { }).pkgsCross.mingw32;
-in stdenv.mkDerivation rec {
+in stdenv.mkDerivation (finalAttrs: {
   pname = "qemu-3dfx-wrappers";
   version = "unstable_2023-05-29";
 
@@ -14,13 +14,15 @@ in stdenv.mkDerivation rec {
   };
 
   patchPhase = ''
+    runHook prePatch
     for f in wrappers/*/*/Makefile*; do
-        substituteInPlace "$f" --replace 'git rev-parse HEAD' 'echo ${src.rev}'
+        substituteInPlace "$f" --replace 'git rev-parse HEAD' 'echo ${finalAttrs.src.rev}'
     done
     substituteInPlace wrappers/3dfx/ovl/Makefile --replace '/opt/watcom11/bin' "$(dirname $(which wcc386))"
     substituteInPlace wrappers/3dfx/ovl/{Makefile,glideovl.lnk} --replace 'obj' 'o'
     substituteInPlace wrappers/3dfx/dxe/glidedxe.c --replace 'uint8_t pad[ALIGNED(1)];' 'uint8_t pad[ALIGNED(1)] = {0};'
     sed -i -e '/^\(QEMU_SRC_DIR\|INCLUDES\)=/s/\\/\//g' wrappers/3dfx/ovl/Makefile
+    runHook postPatch
   '';
 
   buildInputs = [
@@ -61,4 +63,4 @@ in stdenv.mkDerivation rec {
     maintainers = with maintainers; [ hughobrien ];
     platforms = with platforms; linux ++ windows;
   };
-}
+})
