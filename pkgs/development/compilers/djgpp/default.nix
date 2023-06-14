@@ -74,8 +74,9 @@ stdenv.mkDerivation rec {
     runHook postBuild
   '';
 
-  extraBinDir = if i686Build then "i686-pc-msdosdjgpp" else "i586-pc-msdosdjgpp";
-  postInstall = ''
+  postInstall = let
+    extraBinDir = if i686Build then "i686-pc-msdosdjgpp" else "i586-pc-msdosdjgpp";
+  in ''
     for f in dxegen dxe3gen dxe3res exe2coff stubify; do
       cp -v "$out/${targetArchitecture}-pc-msdosdjgpp/bin/$f" "$out/bin"
     done
