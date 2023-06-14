@@ -151,6 +151,7 @@ stdenv.mkDerivation rec {
     cp -r "${kjl3dfx}/qemu-0/hw/3dfx" ./hw/
     cp -r "${kjl3dfx}/qemu-1/hw/mesa" ./hw/
     chmod +w ./hw/3dfx ./hw/mesa
+    substituteInPlace hw/3dfx/glide2x_impl.c --replace 'libglide' '${openglidekjl}/lib/libglide';
 
     scriptfile="kjl_sign_commit.sh"
     sed 's|cd $GIT; git rev-parse $ARG|echo ${kjl3dfx.rev}|' "${kjl3dfx}/scripts/sign_commit" > "$scriptfile"
