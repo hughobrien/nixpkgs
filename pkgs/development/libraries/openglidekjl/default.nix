@@ -1,4 +1,5 @@
-{ autoconf, automake, fetchFromGitHub, lib, libGL, libGLU, libtool, libX11, mesa , stdenv }:
+{ autoconf, automake, fetchFromGitHub, lib, libGL
+, libGLU, libtool, libX11, mesa , stdenv }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "openglidekjl";

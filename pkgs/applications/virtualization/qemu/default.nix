@@ -35,7 +35,7 @@
                           ++ ["${stdenv.hostPlatform.qemuArch}-softmmu"])
                     else null)
 , nixosTestRunner ? false
-, kjl3dfxSupport ? false, openglidekjl
+, kjl3dfxSupport ? false, openglidekjl, qemu_3dfx_wrappers
 , doCheck ? false
 , qemu  # for passthru.tests
 }:
