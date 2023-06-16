@@ -903,6 +903,8 @@ with pkgs;
 
   graph-easy = callPackage ../tools/graphics/graph-easy { };
 
+  iat = callPackage ../development/tools/iat { };
+
   mangal = callPackage ../applications/misc/mangal { };
 
   mermaid-filter = callPackage ../tools/misc/mermaid-filter { };
