@@ -40340,6 +40340,8 @@ with pkgs;
 
   wineasio = callPackage ../applications/emulators/wineasio { };
 
+  wined3d = callPackage ../applications/emulators/wined3d { };
+
   wishbone-tool = callPackage ../development/tools/misc/wishbone-tool { };
 
   with-shell = callPackage ../applications/misc/with-shell { };
