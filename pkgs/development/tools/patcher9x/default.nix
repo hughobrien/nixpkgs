@@ -1,16 +1,16 @@
 { fasm, lib, stdenv, fetchFromGitHub }:
 
 stdenv.mkDerivation (finalAttr: {
-  pname = "patcher9x";
+  name = "patcher9x";
   version = "0.8.50";
 
   srcs = [
     (fetchFromGitHub {
       owner = "JHRobotics";
-      repo = "patcher9x";
+      repo = finalAttr.name;
       rev = "v${finalAttr.version}";
       hash = "sha256-TZw2+R7Dzojzxzal1Wp8jhe5gwU4CfZDROITi5Z+auo=";
-      name = "patcher9x";
+      name = finalAttr.name;
     })
 
     (fetchFromGitHub {
@@ -23,7 +23,7 @@ stdenv.mkDerivation (finalAttr: {
   ];
 
   buildInputs = [ fasm ];
-  sourceRoot = finalAttr.pname;
+  sourceRoot = finalAttr.name;
   hardeningDisable = [ "fortify" ];
 
   preBuild = ''
