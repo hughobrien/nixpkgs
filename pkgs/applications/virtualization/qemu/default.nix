@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
   kjl3dfx = fetchFromGitHub {
     owner = "kjliew";
     repo = "qemu-3dfx";
-    rev = "0f2faac7ade56c666fd8ee0cf2c5dafec60631ec";
+    rev = "f4db048c5c2f19098774bab449ad40c0a3364847";
     hash = "sha256-zNJAf13VuSzzdq4uUrJ63Kl38yrIzN+plFqPy4fBLXo=";
     name = "3dfx";
   };
