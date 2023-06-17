@@ -1,3 +1,4 @@
+# TRY NIX_LDFLAGS again
 { lib, stdenv, fetchurl, fetchpatch, fetchFromGitHub, python3Packages, zlib, pkg-config, glib, buildPackages
 , pixman, vde2, alsa-lib, texinfo, flex
 , bison, lzo, snappy, libaio, libtasn1, gnutls, nettle, curl, ninja, meson, sigtool
