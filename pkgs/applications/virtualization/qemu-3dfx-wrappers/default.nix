@@ -9,8 +9,8 @@ in stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "kjliew";
     repo = "qemu-3dfx";
-    rev = "f4db048c5c2f19098774bab449ad40c0a3364847";
-    hash = "sha256-zNJAf13VuSzzdq4uUrJ63Kl38yrIzN+plFqPy4fBLXo=";
+    rev = "1f28212c5f8c0e8c59b775eb02bef9e313b8f8e2";
+    hash = "sha256-HF7iJOKhSS4FOY0O/+JD9z58UiQmabdxWZDVKATAC0Q=";
   };
 
   patchPhase = ''
