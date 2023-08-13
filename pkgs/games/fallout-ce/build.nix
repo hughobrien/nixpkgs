@@ -5,7 +5,7 @@
 , stdenv
 
 , extraBuildInputs ? [ ]
-, extraMeta ? { }
+, extraMeta
 , name
 , src
 }:
