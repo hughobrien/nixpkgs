@@ -7,12 +7,13 @@
 
 , extraBuildInputs ? [ ]
 , extraMeta
-, name
+, pname
+, version
 , src
 }:
 
-stdenv.mkDerivation (finalAttrs: {
-  inherit name src;
+stdenv.mkDerivation {
+  inherit pname version src;
 
   nativeBuildInputs = [ cmake makeWrapper ];
   buildInputs = [ SDL2 ] ++ extraBuildInputs;
@@ -28,9 +29,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   installPhase = ''
     runHook preInstall
-    install -D ${name} $out/bin/${name}
+
+    install -D ${name} $out/bin/${name}-unwrapped
     install -D ${./wrapper.sh} $out/bin/wrapper.sh
-    wrapProgram $out/bin/${name} --run $out/bin/wrapper.sh
+    wrapProgram $out/bin/${name}-unwrapped $out/bin/${name} --run $out/bin/wrapper.sh
+
     runHook postInstall
   '';
 
@@ -39,4 +42,4 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = with maintainers; [ hughobrien TheBrainScrambler ];
     platforms = platforms.linux;
   } // extraMeta;
-})
+}
