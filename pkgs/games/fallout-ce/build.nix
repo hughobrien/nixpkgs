@@ -1,6 +1,7 @@
 { cmake
 , fpattern
 , lib
+, makeWrapper
 , SDL2
 , stdenv
 
@@ -13,7 +14,7 @@
 stdenv.mkDerivation (finalAttrs: {
   inherit name src;
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake makeWrapper ];
   buildInputs = [ SDL2 ] ++ extraBuildInputs;
   hardeningDisable = [ "format" ];
   cmakeBuildType = "RelWithDebInfo";
@@ -28,6 +29,8 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
     install -D ${name} $out/bin/${name}
+    install -D ${./wrapper.sh} $out/bin/wrapper.sh
+    wrapProgram $out/bin/${name} --run $out/bin/wrapper.sh
     runHook postInstall
   '';
 
