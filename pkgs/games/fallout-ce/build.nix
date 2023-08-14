@@ -32,7 +32,10 @@ stdenv.mkDerivation {
 
     install -D ${pname} $out/bin/${pname}-unwrapped
     install -D ${./wrapper.sh} $out/bin/wrapper.sh
-    makeWrapper $out/bin/${pname}-unwrapped $out/bin/${pname} --run $out/bin/wrapper.sh
+    makeWrapper $out/bin/${pname}-unwrapped $out/bin/${pname} \
+      --run 'mkdir -p "''${XDG_DATA_HOME:-''$HOME/.local/share}"/${pname}' \
+      --run 'cd "''${XDG_DATA_HOME:-''$HOME/.local/share}"/${pname}' \
+      --run $out/bin/wrapper.sh
 
     runHook postInstall
   '';

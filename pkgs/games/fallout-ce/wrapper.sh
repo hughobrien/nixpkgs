@@ -16,11 +16,6 @@ if [ ! -d "data/sound/music" ]; then
     NOTICE=1
 fi
 
-if [ ! -f "*.cfg" ]; then
-    echo "cfg file not found in $PWD. Generating one with default values."
-    NOTICE=1
-fi
-
 if [ $NOTICE ]; then
     echo "Please reference the installation instructions at https://github.com/alexbatalov/fallout2-ce"
 fi
