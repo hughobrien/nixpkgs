@@ -30,9 +30,9 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -D ${name} $out/bin/${name}-unwrapped
+    install -D ${pname} $out/bin/${pname}-unwrapped
     install -D ${./wrapper.sh} $out/bin/wrapper.sh
-    wrapProgram $out/bin/${name}-unwrapped $out/bin/${name} --run $out/bin/wrapper.sh
+    makeWrapper $out/bin/${pname}-unwrapped $out/bin/${pname} --run $out/bin/wrapper.sh
 
     runHook postInstall
   '';

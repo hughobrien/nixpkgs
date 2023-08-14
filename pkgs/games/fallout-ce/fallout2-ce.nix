@@ -9,7 +9,7 @@ callPackage ./build.nix rec {
 
   src = fetchFromGitHub {
     owner = "alexbatalov";
-    repo = pname;
+    repo = "fallout2-ce";
     rev = "v${version}";
     hash = "sha256-+N4jhmxBX6z48kaU0jm90OKhguHlggT3OF9uuyY0EV0=";
   };
