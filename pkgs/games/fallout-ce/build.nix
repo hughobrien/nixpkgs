@@ -41,7 +41,7 @@ let
       exit $fault;
     fi
 
-    exec @out@/libexec/${pname} "$@"
+    exec @out@/bin/${pname}-unwrapped "$@"
   '';
 in
 stdenv.mkDerivation {
@@ -62,7 +62,7 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -D ${pname} $out/libexec/${pname}
+    install -D ${pname} $out/bin/${pname}-unwrapped
     install -D ${launcher} $out/bin/${pname}
     substituteInPlace $out/bin/${pname} --subst-var out
 
