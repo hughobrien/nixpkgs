@@ -1440,6 +1440,9 @@ with pkgs;
 
   winetricks = callPackage ../applications/emulators/wine/winetricks.nix { };
 
+  bigpemu = callPackage ../by-name/bi/bigpemu/package.nix {
+    buildFHSUserEnv = buildFHSEnv;
+  };
   zsnes = pkgsi686Linux.callPackage ../applications/emulators/zsnes { };
   zsnes2 = pkgsi686Linux.callPackage ../applications/emulators/zsnes/2.x.nix { };
 
