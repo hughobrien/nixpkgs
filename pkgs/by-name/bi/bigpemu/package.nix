@@ -40,6 +40,8 @@ let
 
     dontPatchELF = true;
 
+    passthru.updateScript = ./update.sh;
+
      meta = {
       description = "Atari Jaguar Emulator (BigPEmu) by Richard Whitehouse";
       homepage = "https://www.richwhitehouse.com/jaguar/index.php";
