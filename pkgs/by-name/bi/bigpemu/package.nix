@@ -6,7 +6,7 @@
   glui,
   libGLU,
   libGL,
-  buildFHSUserEnv,
+  buildFHSEnv,
 }:
 
 let
@@ -40,17 +40,21 @@ let
 
     dontPatchELF = true;
 
-    meta = with lib; {
+     meta = {
       description = "Atari Jaguar Emulator (BigPEmu) by Richard Whitehouse";
       homepage = "https://www.richwhitehouse.com/jaguar/index.php";
-      license = licenses.unfree;
-      maintainers = [ maintainers.tombert ];
+      license = lib.licenses.unfree;
+      maintainers = with lib.maintainers [
+         tombert
+         hughobrien
+      ];
       platforms = [ "x86_64-linux" ];
     };
   };
+  };
 
 in
-buildFHSUserEnv {
+buildFHSEnv {
   name = "bigpemu";
   targetPkgs = pkgs: [
     SDL2
